@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Schizophrenia Research Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inconsolata:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #0a0a12;
+      --ink-light: #28283c;
+      --ink-faded: #52526a;
+      --paper: #eeeaf8;
+      --paper-warm: #e6e2f4;
+      --paper-crease: #d4d0e8;
+      --rule: #0a0a12;
+      --rule-light: #a8a4c0;
+      --accent: #2a1a6e;
+      --col-gap: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    body {
+      background: #bbbac8;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(0,0,0,0.03) 31px, rgba(0,0,0,0.03) 32px);
+      min-height: 100vh;
+      padding: 32px 16px;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      color: var(--ink);
+    }
+
+    .newspaper {
+      max-width: 1120px;
+      margin: 0 auto;
+      background: var(--paper);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      box-shadow: 0 1px 0 #9090a8, 0 2px 0 #bbbac8, 4px 4px 24px rgba(0,0,0,0.35), -1px 1px 0 rgba(255,255,255,0.4) inset;
+      padding: 0 0 56px;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      border-bottom: 3px double var(--rule);
+      padding: 24px 48px 0;
+      text-align: center;
+    }
+
+    .masthead-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.68rem;
+      color: var(--ink-faded);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      letter-spacing: 0.04em;
+    }
+
+    .masthead-top span { display: block; }
+    .masthead-top .center { text-align: center; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .masthead-title { padding: 16px 0 10px; }
+
+    .masthead-title h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      letter-spacing: -0.02em;
+      line-height: 0.92;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    .masthead-title .subtitle {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-faded);
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .masthead-rule { border: none; border-top: 1px solid var(--rule); margin: 10px 0 0; }
+
+    .masthead-meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0 14px;
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.7rem;
+      color: var(--ink-faded);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── STATES ── */
+    .state-panel {
+      text-align: center;
+      padding: 80px 48px;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink-faded);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      margin: 20px 48px 20px;
+      padding: 10px 0;
+      display: flex;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .stat {
+      flex: 1;
+      text-align: center;
+      padding: 0 8px;
+      border-right: 1px solid var(--rule-light);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faded);
+      margin-top: 3px;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      margin: 28px 48px 0;
+      padding-bottom: 6px;
+      border-bottom: 3px solid var(--ink);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .section-title.high       { color: var(--ink); }
+    .section-title.moderate   { color: var(--ink-light); }
+    .section-title.background { color: var(--ink-faded); }
+
+    .section-count {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.65rem;
+      color: var(--ink-faded);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── GRID ── */
+    .papers-grid { margin: 0 48px; column-gap: var(--col-gap); }
+    .papers-grid.high       { columns: 2; margin-top: 16px; }
+    .papers-grid.moderate   { columns: 3; margin-top: 14px; }
+    .papers-grid.background { columns: 3; margin-top: 14px; }
+
+    /* ── ARTICLE ── */
+    .article {
+      break-inside: avoid;
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--rule-light);
+      cursor: pointer;
+    }
+
+    .article:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .article-score {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faded);
+      margin-bottom: 5px;
+    }
+
+    .score-bar {
+      display: inline-block;
+      height: 5px;
+      width: 10px;
+      background: var(--accent);
+      margin-right: 3px;
+      vertical-align: middle;
+      opacity: 0.2;
+    }
+
+    .score-bar.filled { opacity: 1; }
+
+    .article h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.22;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .high .article h2       { font-size: 1.22rem; }
+    .moderate .article h2   { font-size: 1.05rem; }
+    .background .article h2 { font-size: 0.96rem; }
+
+    .article h2::first-letter {
+      font-size: 1.85em;
+      line-height: 0.72;
+      float: left;
+      margin: 3px 5px 0 0;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .high .article h2::first-letter { font-size: 2.1em; }
+
+    .article-byline {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      color: var(--ink-faded);
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+      clear: both;
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .meta-pill {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.6rem;
+      padding: 1px 6px;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule-light);
+      color: var(--ink-faded);
+    }
+
+    .meta-pill.highlight {
+      background: var(--accent);
+      color: var(--paper);
+      border-color: var(--accent);
+    }
+
+    .article-finding {
+      font-size: 0.88rem;
+      line-height: 1.68;
+      color: var(--ink-light);
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .article-finding strong { font-weight: 700; color: var(--accent); }
+
+    /* ── EXPAND ── */
+    .article-expand { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+    .article-expand.open { max-height: 500px; }
+
+    .article-full {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--rule-light);
+    }
+
+    .full-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .full-row-label {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-faded);
+      min-width: 100px;
+      padding-top: 2px;
+    }
+
+    .full-row-val {
+      color: var(--ink-light);
+      flex: 1;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    .article-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      letter-spacing: 0.04em;
+      padding-bottom: 1px;
+    }
+
+    .article-link:hover { opacity: 0.7; }
+
+    .article-toggle {
+      display: block;
+      margin-top: 8px;
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.65rem;
+      color: var(--ink-faded);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .article-toggle:hover { color: var(--ink); }
+
+    /* ── DIVIDER ── */
+    .section-rule {
+      margin: 28px 48px 0;
+      border: none;
+      border-top: 1px solid var(--rule-light);
+    }
+
+    /* ── FOOTER ── */
+    .newspaper-footer {
+      margin: 36px 48px 0;
+      padding-top: 14px;
+      border-top: 3px double var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-copy {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      color: var(--ink-faded);
+      text-align: right;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── REFRESH ── */
+    .refresh-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--accent);
+      color: var(--paper);
+      border: none;
+      padding: 10px 18px;
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+      transition: transform 0.1s;
+    }
+
+    .refresh-btn:hover  { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 rgba(0,0,0,0.3); }
+    .refresh-btn:active { transform: translate(1px,1px);   box-shadow: 2px 2px 0 rgba(0,0,0,0.3); }
+
+    .empty-section {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--ink-faded);
+      text-align: center;
+      padding: 18px 0;
+    }
+
+    @media (max-width: 900px) {
+      .papers-grid.high,
+      .papers-grid.moderate,
+      .papers-grid.background { columns: 1; }
+      .masthead, .stats-bar, .section-header,
+      .papers-grid, .newspaper-footer, .section-rule { margin-left: 20px; margin-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="newspaper">
+  <div class="masthead">
+    <div class="masthead-top">
+      <span id="hdr-left">Vol. I · No. —</span>
+      <span class="center">Automated Intelligence from the Research Frontier</span>
+      <span id="hdr-right">Internal Circulation Only</span>
+    </div>
+    <div class="masthead-title">
+      <h1>The Schizo Research Brief</h1>
+      <p class="subtitle">Schizophrenia Spectrum &amp; Psychosis · Daily Scientific Digest ·Created by RamTej & Shabaz </p>
+    </div>
+    <hr class="masthead-rule" />
+    <div class="masthead-meta">
+      <span id="meta-date">Loading…</span>
+      <span id="meta-papers">—</span>
+      <span id="meta-source">Source: NCBI PubMed · Supabase</span>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="state-panel">Fetching today's dispatch…</div>
+  </div>
+</div>
+
+<button class="refresh-btn" onclick="loadPaper()">↺ Refresh</button>
+
+<script>
+  // ── Supabase config ──────────────────────────────────────────────────────
+  const SUPABASE_URL = 'https://ptaikkcjvsrjjlnfcozk.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0YWlra2NqdnNyampsbmZjb3prIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDg0ODk4NCwiZXhwIjoyMDkwNDI0OTg0fQ.P8U7uwPajnyZUrXXF9dJCQwSFZSf-I1nuMPC5fs4kLU';
+  // ────────────────────────────────────────────────────────────────────────
+
+  function todayISO() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  async function sbFetch(path) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!res.ok) throw new Error(`Supabase ${res.status}: ${await res.text()}`);
+    return res.json();
+  }
+
+  function scoreBars(score) {
+    const filled = Math.round(((score || 0) / 100) * 5);
+    let h = '';
+    for (let i = 0; i < 5; i++) h += `<span class="score-bar${i < filled ? ' filled' : ''}"></span>`;
+    return h;
+  }
+
+  function highlightStats(text) {
+    return String(text || '—').replace(
+      /(\d+[\.,]\d+\s*%|\b(?:OR|HR|RR|d|r|p)\s*[=<>]\s*[\d\.]+)/g,
+      '<strong>$1</strong>'
+    );
+  }
+
+  function toggleExpand(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const open = el.classList.toggle('open');
+    const btn = el.previousElementSibling;
+    if (btn && btn.classList.contains('article-toggle'))
+      btn.textContent = open ? '▾ Collapse' : '▸ Full Details';
+  }
+
+  function tierName(score) {
+    if (score >= 60) return 'high';
+    if (score >= 30) return 'moderate';
+    return 'background';
+  }
+
+  function articleHTML(paper) {
+    const id = 'art-' + paper.id;
+    const isHighlight = (paper.score || 0) >= 60;
+    const displayTitle = paper.short_title || paper.title || 'Untitled';
+    const finding      = paper.summary     || paper.title || '—';
+
+    return `
+      <article class="article" onclick="toggleExpand('${id}')">
+        <div class="article-score">
+          ${scoreBars(paper.score)}
+          Score ${paper.score || 0}
+        </div>
+        <h2>${displayTitle}</h2>
+        <div class="article-byline">
+          ${paper.journal ? '<em>' + paper.journal + '</em>' : ''}
+        </div>
+        <div class="article-meta">
+          <span class="meta-pill${isHighlight ? ' highlight' : ''}">${paper.publication_type || 'Study'}</span>
+          ${paper.sample_size ? `<span class="meta-pill">n = ${paper.sample_size}</span>` : ''}
+          ${paper.accuracy    ? `<span class="meta-pill">Acc. ${paper.accuracy}</span>`   : ''}
+        </div>
+        <p class="article-finding">${highlightStats(finding)}</p>
+        ${paper.pubmed_link ? `<a class="article-link" href="${paper.pubmed_link}" target="_blank" rel="noopener">Read on PubMed →</a>` : ''}
+        <button class="article-toggle">▸ Full Details</button>
+        <div class="article-expand" id="${id}">
+          <div class="article-full">
+            <div class="full-row">
+              <span class="full-row-label">Full Title</span>
+              <span class="full-row-val">${paper.title || '—'}</span>
+            </div>
+            <div class="full-row">
+              <span class="full-row-label">Type</span>
+              <span class="full-row-val">${paper.publication_type || '—'}</span>
+            </div>
+            <div class="full-row">
+              <span class="full-row-label">Sample</span>
+              <span class="full-row-val">${paper.sample_size || '—'}</span>
+            </div>
+            <div class="full-row">
+              <span class="full-row-label">Rank</span>
+              <span class="full-row-val">#${paper.rank || '—'} of today's edition</span>
+            </div>
+            ${paper.pubmed_link ? `<a class="article-link" href="${paper.pubmed_link}" target="_blank" rel="noopener">Read full paper on PubMed →</a>` : ''}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function sectionHTML(papers, tier, label) {
+    const body = papers.length === 0
+      ? `<p class="empty-section">No ${label.toLowerCase()} papers in today's edition.</p>`
+      : papers.map(p => articleHTML(p)).join('');
+
+    return `
+      <div class="section-header">
+        <span class="section-title ${tier}">${label}</span>
+        <span class="section-count">${papers.length} paper${papers.length !== 1 ? 's' : ''} today</span>
+      </div>
+      <div class="papers-grid ${tier}">${body}</div>`;
+  }
+
+  async function loadPaper() {
+    const content = document.getElementById('content');
+    content.innerHTML = `<div class="state-panel">Fetching today's dispatch…</div>`;
+
+    try {
+      const today = todayISO();
+
+      // 1. Fetch today's newsletter row
+      const newsletters = await sbFetch(
+        `scz_newsletters?date=eq.${today}&limit=1&select=*`
+      );
+
+      if (!newsletters.length) {
+        content.innerHTML = `<div class="state-panel">
+          No edition found for <strong>${today}</strong>.<br/><br/>
+          <small>The pipeline runs at 8 AM — check back later or trigger it manually in n8n.</small>
+        </div>`;
+        return;
+      }
+
+      const newsletter = newsletters[0];
+
+      // 2. Fetch papers for this newsletter, ordered by rank
+      const papers = await sbFetch(
+        `scz_papers?newsletter_id=eq.${newsletter.id}&order=rank.asc&select=*`
+      );
+
+      // 3. Update masthead
+      const d = new Date(newsletter.date + 'T00:00:00');
+      document.getElementById('meta-date').textContent =
+        d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      document.getElementById('meta-papers').textContent =
+        `${newsletter.total_scanned || 0} Papers Scanned · ${papers.length} Selected`;
+      document.getElementById('hdr-left').textContent = `Vol. I · ${today}`;
+
+      // 4. Bucket into tiers by score
+      const high       = papers.filter(p => (p.score || 0) >= 60);
+      const moderate   = papers.filter(p => (p.score || 0) >= 30 && (p.score || 0) < 60);
+      const background = papers.filter(p => (p.score || 0) < 30);
+
+      // 5. Compute stats from paper text
+      function countKw(kws) {
+        return papers.filter(p => {
+          const t = ((p.title || '') + ' ' + (p.summary || '')).toLowerCase();
+          return kws.some(k => t.includes(k));
+        }).length;
+      }
+
+      const statsBar = `
+        <div class="stats-bar">
+          <div class="stat"><div class="stat-num">${papers.length}</div><div class="stat-label">Papers Today</div></div>
+          <div class="stat"><div class="stat-num">${countKw(['machine learning','deep learning','artificial intelligence'])}</div><div class="stat-label">ML Studies</div></div>
+          <div class="stat"><div class="stat-num">${countKw(['neuroimaging','fmri','eeg'])}</div><div class="stat-label">Neuroimaging</div></div>
+          <div class="stat"><div class="stat-num">${countKw(['biomarker'])}</div><div class="stat-label">Biomarkers</div></div>
+          <div class="stat"><div class="stat-num">${countKw(['antipsychotic','clozapine','olanzapine','risperidone'])}</div><div class="stat-label">Pharmacology</div></div>
+        </div>`;
+
+      // 6. Render everything
+      content.innerHTML =
+        statsBar +
+        sectionHTML(high,       'high',       '★ High-Impact Studies') +
+        `<hr class="section-rule" />` +
+        sectionHTML(moderate,   'moderate',   '◈ Moderate Research') +
+        `<hr class="section-rule" />` +
+        sectionHTML(background, 'background', '○ Background Briefs') +
+        `<div class="newspaper-footer">
+          <div class="footer-title">The Schizophrenia Research Brief</div>
+          <div class="footer-copy">
+            Generated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}<br/>
+            Pipeline: n8n → PubMed → Groq LLM → Supabase<br/>
+            
+          </div>
+        </div>`;
+
+    } catch (err) {
+      content.innerHTML = `<div class="state-panel">
+        Error loading data:<br/><br/>
+        <code style="font-size:0.8rem">${err.message}</code><br/><br/>
+        <small>Check the browser console. Ensure Supabase tables exist and the pipeline has run today.</small>
+      </div>`;
+      console.error(err);
+    }
+  }
+
+  loadPaper();
+</script>
+</body>
+</html>
